@@ -591,7 +591,9 @@ Verifica se há conexão com a internet.
 
 Reiniciar o sistema
 
+```bash
 sudo reboot
+```
 
 ---
 
