@@ -151,6 +151,9 @@ sudo journalctl -xe | grep lightdm
 2. **Adicionar Opções Temporárias**:
    - Selecione a opção de inicialização no GRUB.
    - Pressione **`e`**, edite `quiet splash`, e adicione `nomodeset`.
+  
+   - <img src="grub.jpeg" alt="Texto alternativo" width="700"/>
+   
 3. **Aplicar Alterações Permanentemente**:
    ```bash
    sudo update-grub
@@ -180,9 +183,9 @@ sudo journalctl -xe | grep lightdm
     ```bash
     sudo update-grub
     ```
-    Print da tela, como ficaria:
+    Print da tela, como ficaria permanentemente:
     
-<img src="nomodeset.png" alt="Texto alternativo" width="800"/>
+    - <img src="nomodeset.png" alt="Texto alternativo" width="800"/>
 
 ---
 
