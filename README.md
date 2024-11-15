@@ -597,6 +597,43 @@ sudo reboot
 
 ---
 
+
+# Monitorando a Temperatura da CPU e GPU no Linux
+
+## 1. Instalar o pacote lm-sensors
+Este pacote é necessário para monitorar sensores de temperatura e outros dados de hardware.
+
+```bash
+sudo apt update
+sudo apt install lm-sensors
+```
+
+## 2. Detectar Sensores Disponíveis
+Após a instalação, execute o seguinte comando para detectar os sensores no seu sistema:
+
+```bash
+sudo sensors-detect
+```
+
+Responda "Yes" para as perguntas quando solicitado.
+
+## 3. Verificar Temperatura
+Após detectar os sensores, use o comando abaixo para exibir a temperatura em tempo real:
+
+```bash
+sensors
+```
+
+## 4. Monitoramento em Tempo Real
+Para um monitoramento contínuo da temperatura:
+
+```bash
+watch sensors
+```
+
+Pressione `Ctrl + C` para sair.
+
+
 ## Conclusão
 
 Este guia é um recurso prático para resolver problemas comuns no Linux e otimizar o desempenho do sistema. As soluções aqui apresentadas foram testadas e comprovadas úteis ao longo dos anos.
