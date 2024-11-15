@@ -24,8 +24,9 @@ Para definir o nomodeset permanentemente após a instalação, você pode seguir
     Adicione nomodeset dentro das aspas, ficando assim:
     GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nomodeset"
 
-    <img src="nomodeset.png" alt="Texto alternativo" width="300"/>
+Tela de como ficou:
 
+<img src="nomodeset.png" alt="Texto alternativo" width="900"/>
     
 Salve o arquivo. No Nano, você pode fazer isso pressionando Ctrl + O para salvar e depois Ctrl + X para sair. 
 sudo update-grub
