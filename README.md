@@ -1,6 +1,7 @@
 # Diagnóstico e Soluções para Problemas de Sistema no Linux
 
-Este guia descreve comandos e procedimentos para diagnosticar e solucionar problemas no sistema Linux, especialmente relacionados a gráficos, inicialização e logs do sistema.
+Este guia descreve comandos e procedimentos para diagnosticar e solucionar problemas no sistema Linux, principalmente relacionados a gráficos, inicialização e logs do sistema. Ao longo dos anos, eu, Lya, me deparei com diversos problemas como usuária de Linux. Muitos desses erros foram resolvidos com os comandos aqui apresentados, que se mostraram eficazes repetidamente. Por isso, compartilho este material com você.
+Utilizei muitas distribuições, como Ubuntu, KDE Plasma, Xubuntu, Mint, entre outras. Meu computador sempre exigiu a adição de "nomodeset" para que o sistema pudesse iniciar corretamente após a instalação. Além disso, enfrentei outros erros que o Linux apresentou ao longo da minha jornada como usuária.
 
 ---
 
