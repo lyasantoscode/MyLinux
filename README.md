@@ -5,6 +5,9 @@ Utilizei muitas distribuições, como Ubuntu, KDE Plasma, Xubuntu, Mint, entre o
 
 ---
 
+---
+
+
 ## 1. Registro de Logs com `tail`
 
 ### Salvar Logs em um Arquivo
@@ -355,3 +358,242 @@ Em ambos os casos, o sistema operacional ainda será o **Linux Mint**, e a difer
   - **xfce4-power-manager** (gerenciamento de energia).
 
 Se você instalar o Cinnamon em um sistema Mint XFCE, ambos os conjuntos de ferramentas estarão disponíveis, mas somente o ambiente ativo (Cinnamon ou XFCE) usará suas próprias ferramentas.
+---
+
+---
+
+### 2. Problema: Uso excessivo de swap, deixando o sistema lento
+#### Solução:
+Reduza o "swappiness" para priorizar o uso de RAM antes de usar o swap:
+1. Verifique o valor atual de `swappiness`:
+    ```bash
+    cat /proc/sys/vm/swappiness
+    ```
+2. Reduza o valor para algo entre 10 e 20:
+    ```bash
+    sudo sysctl vm.swappiness=10
+    ```
+3. Para tornar a mudança permanente:
+    ```bash
+    sudo nano /etc/sysctl.conf
+    ```
+    Adicione ou edite a linha:
+    ```
+    vm.swappiness=10
+    ```
+
+---
+
+
+### 3. Problema: Erros ao acessar logs ou sistema travando
+#### Comando Útil:
+Verifique os logs do sistema para entender o problema:
+```bash
+journalctl -xe
+```
+Filtre logs por data ou serviço:
+```bash
+journalctl --since "2024-11-01" --until "2024-11-14"
+journalctl -u NetworkManager.service
+```
+
+---
+
+### 4. Problema: Diretório /tmp cheio, causando problemas em aplicativos
+#### Solução:
+Limpe manualmente o `/tmp`:
+```bash
+sudo rm -rf /tmp/*
+```
+Configure a limpeza automática no reinício:
+```bash
+sudo nano /etc/systemd/tmpfiles.d/tmp.conf
+```
+Adicione as linhas:
+```
+d /tmp 1777 root root 1d
+```
+
+---
+
+### 5. Curiosidade: Comando pouco conhecido para recuperação de pacotes quebrados
+Use o `dpkg` para resolver pacotes quebrados:
+```bash
+sudo dpkg --configure -a
+sudo apt --fix-broken install
+```
+
+---
+
+### 6. Problema: Erro ao montar dispositivos USB ou drives
+#### Solução:
+Force a montagem manual:
+```bash
+sudo mount /dev/sdX1 /mnt
+```
+Se necessário, verifique erros no dispositivo:
+```bash
+sudo fsck /dev/sdX1
+```
+
+---
+
+### 7. Problema: Consumo alto de CPU por serviços desnecessários
+#### Solução:
+Identifique os serviços ativos:
+```bash
+systemctl list-units --type=service
+```
+Desative serviços não utilizados:
+```bash
+sudo systemctl disable nome_do_servico
+sudo systemctl stop nome_do_servico
+```
+
+---
+
+### Dicas e Truques Adicionais
+
+- **Liberando Memória Sem Reiniciar**:
+    Use este comando para limpar o cache de memória:
+    ```bash
+    sudo sync; echo 3 > /proc/sys/vm/drop_caches
+    ```
+
+- **Melhorando o Desempenho de Gráficos em Sistemas Antigos**:
+    Edite o `/etc/X11/xorg.conf` para configurar drivers leves, como `vesa`.
+
+- **Descubra Processos Consumindo Recursos Excessivos**:
+    ```bash
+    top
+    htop
+    ```
+
+---
+
+### Ferramentas Recomendadas
+
+- **htop**: Monitor de recursos do sistema mais avançado que o `top`.
+- **ncdu**: Análise de uso de disco interativa.
+- **tmux**: Gerenciador de sessões em terminais.
+
+---
+
+## Visualizar Memória RAM e Swap
+
+### Ver o uso de RAM e Swap
+```bash
+free -h
+```
+Exibe informações da memória RAM e Swap de forma amigável.
+
+**Exemplo de saída:**
+```
+              total        used        free      shared  buff/cache   available
+Mem.:          7,6Gi       2,1Gi       4,7Gi        45Mi       1,1Gi       5,5Gi
+Swap:          2,0Gi          0B       2,0Gi
+```
+
+### Detalhes avançados sobre a memória
+```bash
+cat /proc/meminfo
+```
+Exibe informações detalhadas da memória no sistema.
+
+---
+
+## Apagar Caches
+
+### Limpar caches para liberar memória
+```bash
+sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"
+```
+**Aviso:** Este comando limpa as páginas de cache do sistema. Não afeta processos ativos, mas deve ser usado com cautela.
+
+### Explicação dos valores:
+- `1`: Limpa caches de páginas de memória.
+- `2`: Limpa caches de dentries e inodes.
+- `3`: Limpa tudo (páginas de memória, dentries e inodes).
+
+---
+
+## Diminuir o Uso de Swap
+
+### Verificar o valor atual de swappiness
+```bash
+cat /proc/sys/vm/swappiness
+```
+**Valor padrão:** Geralmente 60, o que significa que o sistema usa Swap mais cedo.
+
+### Reduzir o uso de Swap
+```bash
+sudo sysctl vm.swappiness=10
+```
+Altera temporariamente o swappiness para priorizar mais a RAM.
+
+### Tornar a alteração permanente
+Edite o arquivo `/etc/sysctl.conf`:
+```bash
+sudo nano /etc/sysctl.conf
+```
+Adicione ou edite a linha:
+```
+vm.swappiness=10
+```
+Salve e saia (`Ctrl + O`, `Ctrl + X`).
+
+## Dicas e Comandos Úteis
+
+### Ver informações sobre hardware
+```bash
+lshw -short
+```
+
+### Checar logs de falhas
+```bash
+journalctl -p err -b
+```
+Exibe logs de erro da sessão atual.
+
+### Remover pacotes não utilizados
+```bash
+sudo apt autoremove
+```
+Remove pacotes antigos e desnecessários.
+
+### Apagar arquivos temporários
+```bash
+sudo rm -rf /tmp/*
+```
+
+### Listar pacotes instalados
+```bash
+dpkg --get-selections
+```
+
+### Atualizar a lista de repositórios e pacotes
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+---
+
+### Testar conexões de rede diretamente no terminal
+```bash
+curl -Is https://google.com | head -n 1
+```
+Verifica se há conexão com a internet.
+
+---
+
+Reiniciar o sistema
+
+sudo reboot
+
+---
+
+## Conclusão
+
+Este guia é um recurso prático para resolver problemas comuns no Linux e otimizar o desempenho do sistema. As soluções aqui apresentadas foram testadas e comprovadas úteis ao longo dos anos.
+
+Se você tiver dúvidas ou quiser contribuir com novas dicas, fique à vontade para compartilhar!
