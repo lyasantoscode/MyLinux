@@ -169,11 +169,16 @@ sudo journalctl -xe | grep lightdm
   - Altere a linha:
     ```
     GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nomodeset"
+
+    
     ```
   - Salve e atualize:
     ```bash
     sudo update-grub
     ```
+    Print da tela, como ficaria:
+    
+<img src="nomodeset.png" alt="Texto alternativo" width="800"/>
 
 ---
 
